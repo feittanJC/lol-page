@@ -1,0 +1,59 @@
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+
+function Card() {
+  const [champion, setChampion] = useState("");
+
+  useEffect(() => {
+    axios
+      .get(
+        "http://ddragon.leagueoflegends.com/cdn/13.13.1/data/es_MX/champion.json"
+      )
+      .then(function (response) {
+        setChampion(response.data.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
+      .finally(function () {
+        console.log("Enviado");
+      });
+  }, []);
+
+  const renderChampionCards = () => {
+    const championArray = Object.entries(champion);
+    const groupedChampions = [];
+
+    for (let i = 0; i < championArray.length; i += 5) {
+      groupedChampions.push(championArray.slice(i, i + 5));
+    }
+
+    return groupedChampions.map((group, index) => (
+      <div className="flex justify-around pt-10" key={index}>
+        {group.map(([championName, championData]) => {
+            const championId = championData.id;
+            const championTitle = championData.title;
+          return (
+            <div
+              className="bg-black  text-center flex flex-col h-[500px] w-[15%] hover:shadow-xl hover:shadow-gray-800 transition duration-500 hover:scale-110 ease-in-out cursor-pointer rounded-xl pb-3"
+              key={championId}
+            >
+              <img
+                className="h-[90%] rounded-xl"
+                src={`http://ddragon.leagueoflegends.com/cdn/img/champion/loading/${championId}_0.jpg`}
+                alt=""
+                height="100%"
+              />
+              <h1 className="text-2xl text-yellow-500 font-bold"> {championName} </h1>
+              <p className="text-xs text-white first-letter:capitalize" > {championTitle} </p>
+            </div>
+          );
+        })}
+      </div>
+    ));
+  };
+
+  return <>{renderChampionCards()}</>;
+}
+
+export default Card;

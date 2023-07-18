@@ -28,7 +28,7 @@ function Card() {
           const championId = championData.id;
           const championTitle = championData.title;
           return (
-            <Link to={`/${championId}`} className="w-[15%] mx-10 p-0">
+            <Link to={`/${championId}`} className="w-[15%] mx-10 p-0" key={championId}>
             <div
               className="bg-black text-center flex flex-col h-[500px] w-[100%]  my-5 hover:shadow-xl hover:shadow-gray-800 transition duration-500 hover:scale-110 ease-in-out cursor-pointer rounded-xl pb-3 "
               key={championId}

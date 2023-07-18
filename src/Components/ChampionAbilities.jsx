@@ -3,28 +3,12 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-function ChampionAbilities() {
+function ChampionAbilities({data}) {
   const champ = useParams();
 
   const champId = champ.id;
 
-  const [data, setData] = useState("");
 
-  useEffect(() => {
-    axios
-      .get(
-        `http://ddragon.leagueoflegends.com/cdn/13.13.1/data/es_MX/champion/${champId}.json`
-      )
-      .then(function (response) {
-        setData(response.data.data[champId]);
-      })
-      .catch(function (error) {
-        console.log(error);
-      })
-      .finally(function () {
-        console.log("Enviado");
-      });
-  }, []);
 
   const x =
     data && data.passive && data.passive.image ? data.passive.image.full : "";
